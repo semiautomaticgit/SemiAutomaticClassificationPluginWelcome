@@ -1,0 +1,14 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<?xml-stylesheet type="text/xsl" href="/static/style/plugins.xsl" ?>
+<plugins>
+ <plugins>
+   <pyqgis_plugin name = "Test" version = "6">
+     <description> Test </ description>
+     <homepage>  https://codeload.github.com/semiautomaticgit/SemiAutomaticClassificationPlugin </ homepage>
+     <qgis_minimum_version> 2.0 </ qgis_minimum_version>
+     <file_name> testplugin.zip </ file_name>
+     <author_name> Luca Congedo </ author_name>
+     <download_url> https://codeload.github.com/semiautomaticgit/SemiAutomaticClassificationPlugin/zip/master </ download_url>
+   </ pyqgis_plugin>
+ </ plugins> 
+</plugins>
