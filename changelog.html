@@ -3,47 +3,18 @@
 <b>Changelog</b></div>
 <div style="text-align: justify;">
 <pre>
--new interface
--new input file (extension .scp) which is a zip file containing the shapefile and signature list file
--possibility to create multipart ROIs (pressing CTRL + mouse click) and CTRL + Z for removing last part
--C ID is automatically incremented after saving a ROI
--function to merge ROI polygons from table
--new Land Cover Signature classification based on the range values of spectral signatures
--new tab for the definition of range values for Land Cover Signature classification
--in Landsat and Sentinel pre processing added option for calculations based on the band set
--new tab for PCA (Principal Components Analysis) of Band set
--in Band set added options for automatic calculation of virtual raster, stack of layers, build overviews, and Band calc expressions
--enhanced signature plot that allows for interactive definition of range values and new navigation (pan with left click and zoom with scroll or right click)
--enhanced Band calc allowing for the use of variables "#BLUE#" , "#RED#", and "#NIR#" in expressions
--Band calc option to use custom file names for multiple expression adding @fileName at the end of expression
--in Band calc added Decision rules for calculating raster based on conditions (e.g. "raster1 >0" or multiple rules separated by semicolon)
--added button for importing SCP file (polygons with automatic reprojection and spectral signatures), CSV, and external shapefile
--direct search of Landsat images from NASA CMR Search
--new tab for search and download of ASTER images L1T  from NASA Land Processes Distributed Active Archive Center
--new tab for conversion of ASTER images L1T
--new tab for manual raster editing
--new tab for classification sieve
--new tab for classification erosion
--new tab for classification dilation
--new tab for conversion from vector to raster (using a reference raster for pixel alignment)
--new tab for batch processing (Landsat conversion, Sentinel conversion,  ASTER conversion, Create band set, Classification, Split raster bands, Vector to raster, Clip multiple rasters, Accuracy, Land Cover Change, Classification report, Classification to vector, Reclassification, Classification sieve, Classification erosion, Classification dilation, Edit raster using shapefile, Band calc) and option for using a working directory (!working_dir!)
--new tab for editing RGB list
--improved settings of UL and LR points for area definition in several tabs (left click for UL point and right click for LR point)
--added service option for Sentinel-2 download mirrors (e.g. working with https://finhub.nsdc.fmi.fi , https://data.sentinel.zamg.ac.at)
--if available, Sentinel-2 granule preview are downloaded from the Amazon Web Services (http://sentinel-pds.s3-website.eu-central-1.amazonaws.com)
--results of image searching are added to the previous results in the table
--improved scatter plot
--ROI size (pixels) is calculated in the Signature details
--added button for calculation of spectral distances
--clip multiple rasters using shapefile and accuracy assessment now work also if shapefile and raster projections are different
+version 5.1.0
+-added toolbar for editing raster
+-fixed issue in sorting and removing bands in the Band set
+-various bug fixing
 <pre>
 </div>
 <br />
 <div style="text-align: justify;">
-<a href="http://fromgistors.blogspot.com/p/user-manual.html?spref=scp" target="">User manual of SCP</a></div>
+<a href="https://fromgistors.blogspot.com/p/user-manual.html?spref=scp" target="">User manual of SCP</a></div>
 <br />
 <div style="text-align: justify;">
-<a href="http://fromgistors.blogspot.com/search/label/Tutorial?max-results=5">Tutorials about SCP</a></div>
+<a href="https://fromgistors.blogspot.com/search/label/Tutorial?max-results=5">Tutorials about SCP</a></div>
 <br />
 <div style="text-align: justify;">
 <a href="https://www.facebook.com/groups/SemiAutomaticClassificationPlugin">SCP group in Facebook</a></div>
@@ -52,5 +23,5 @@
 <a href="https://plus.google.com/communities/107833394986612468374">SCP community in Google+</a></div>
 <br />
 <div style="text-align: left;">
-<a href="http://fromgistors.blogspot.com/?spref=scp">From GIS to Remote Sensing</a></div>
+<a href="https://fromgistors.blogspot.com/?spref=scp">From GIS to Remote Sensing</a></div>
 <br />
