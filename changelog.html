@@ -3,13 +3,39 @@
 <b>Changelog</b></div>
 <div style="text-align: justify;">
 <pre>
-version 5.3.0
--added MODIS download and preprocessing tool
--added tool for stacking raster bands
--added MODIS processing and stack bands to Batch tool
--added option to export training input as shapefile
--fixed Sentinel-2 search
--fixed importing spectral signatures
+version 6.0.0
+-version updated for QGIS 3
+-updated the Main interface with new tabs and design
+-in tab Band set added option for multiple band set definition that can be moved and closed
+-in tab Band set quick wavelength set according to band number of sensor
+-new tab Download products for searching and downloading free images and products
+-in tab Download products added download and preprocessing of Sentinel-2 Level 2A
+-in tab Download products added download of Sentinel-3 OLCI
+-in tab Download products added image preview with click on Product list items
+-in tab Download products added option to import and export table of product download
+-in tab Download products the Product list is saved with the project
+-in tabs Landsat Sentinel-2 and ASTER added option to limit DOS1 correction only to blue and green bands
+-in tab Preprocessing added tool for Sentinel-3 OLCI
+-in tab Preprocessing added tool Mosaic band sets for the creation of multiband mosaics
+-in tab Preprocessing added tool Cloud masking of a band set which is based on the values of a classification
+-in tab Band processing added tool Clustering with K-means and ISODATA algorithms
+-in tab Band processing added tool Spectral distance for calculating pixel distance between two band sets
+-in tab Band processing added tool Band combination for calculating a raster of band combinations from a band set
+-in tab Postprocessing added tool Class signature for calculating the spectral signatures of classes in a classification using a band set
+-in tab ROI Creation added option to autosave training input (backup file created when saving QGIS project)
+-in tab Clip Multiple Rasters added option to select a vector field for iterating through each vector polygon and add field value to the output name
+-in Working toolbar added possibility to plot spectral signatures of the same pixel for all the band sets (pressing the button ROI region growing then CTRL + mouse right click in the map)
+-in tab Classification the threshold value if > 0 is used for all the spectral signatures;
+-in tab Edit raster added vector as variable name for using vector value in expression
+-in tab Batch added several new functions and changed some of the function variable names
+-in tab Batch added label for checking the expression
+-in tab Batch added table containing the list of functions
+-in tab Settings Processing added SMTP process notification
+-in tab Settings Debug added table of Log
+-in tab Multiple ROI creation now can import a point shapefile for point coordinates
+-in tab Multiple ROI creation the random point creation avoids raster NoData
+-in Spectral Signature Plot fixed signature plot for large values
+-various bugfixing and improvements 
 <pre>
 </div>
 <br />
