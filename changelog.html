@@ -3,119 +3,40 @@
 <b>Changelog</b></div>
 <div style="text-align: justify;">
 <pre>
-version 7.0.0
-New tools
-- Band set list tab for managing band sets and double click to define active band set and functions to import export band sets and button to display RGB composite
-- Random forest tab for classifying the band set using training input with Random Forest (ESA SNAP required)
-- Sentinel-1 tab for processing Sentinel-1 GRD products polarizations VH and VV (ESA SNAP required) based on the preprocessing steps in https://developers.google.com/earth-engine/sentinel1
-- GOES tab for processing GOES 16 and GOES 17 images
-- Zonal stat raster tab for calculating raster statistic in zones defined by a reference vector or raster and for each zone value creating rasters filled woth the corresponding output statistic, named as outputnameZoneValue (e.g. output1, output2, output3)
-- Classification tab that replaces the classification dock
-- Reproject raster bands that allows for reprojecting a band set to a new projection with the option of using a reference raster for alignment and extent or setting the EPSG value and pixel resolution manually; methods of resampling: nearest_neighbour, average, sum, maximum, minimum, mode, median, first_quartile, third_quartile
-
-Implemented parallel processing for several tools
-- Classification
-- Band calc
-- ASTER preprocessing
-- GOES preprocessing
-- Landsat preprocessing
-- MODIS preprocessing
-- Sentinel-2 preprocessing
-- Sentinel-3 preprocessing
-- Clip multiple rasters
-- Zonal stat raster
-- Reclassification
-- Cross classification
-- Band combination
-- Classification to vector
-- ROI creation and signature calculation
-- Spectral distance of band sets
-
-Main interface window
-- Renewed interface with tree view menu, a filter for searching tools, and a new tab Help for displaying the guide of tools
-
-SCP Dock
-- ROI signature list structured as tree of macroclasses
-- added table filter for ROIs
-- new button for removing training input
-- Classification moved to main interface
-
-Tab Band calc
-- added the iteration of calculations over band sets entering in the first line forbandsets e.g. forbandsets[1:3] for iterating over a range or forbandsets[1,2,3] for iterating selected band sets; it is possible to enter a string after ] to filter names of first band in band set (e.g. forbandsets[1,2,3]RT)
-- added the iteration of calculations over dates (format yyyy-mm-dd) of band sets entering in the first line forbsdates e.g. forbsdates[2020-01-01:2020-03-30] for iterating over a range or forbsdates[2020-02-01,2020-03-11,2020-04-21] for iterating selected dates, also list of ranges such as forbsdates[2010-01-01:2010-03-30, 2010-08-01:2010-08-31, 2010-10-01:2010-12-31]; it is possible to enter a string after ] to filter names of first band in band set
-- added the iteration of bands in a band set or a range of band sets entering in the first line forbandsinbandset (e.g. forbandsinbandset[1] for iterating over bands in the first band set) and in the following expression the variable #BAND# to refer to the iterated band (e.g. where("#BAND#">1, 1, 2) @"#BAND#")
-- added the possibility to use the output name of calculation as variable for following calculations
-- added the possibility to add the calculation result to a band set using the %number in the output name such as @output%1 or to current band set with # such as @output%#
-- added the possibility to set the output path defining the output name with this structure @path@name, also with the variable #BANDSET# such as @#BANDSET#@name to save the calculation in the directory containing the first band of the current band set. It is recommended to avoid the use of characters # and @ in the raster name
-- added the possibility to create temporary output defining the output path (i.e. temp) and output name with this structure @temp@name
-- added the option to create virtual raster output (i.e. .vrt files) made of .tif files from parallel processing
-- added the variable "bandset#b*" for using all the bands of active band set in expressions such as np.max("bandset#b*")
-- added the variable "bandsetNb*" for using all the bands of band set N in expressions such as np.max("bandset1b*")
-- added the variable "bandsetNbL" for referring to band set N and Band L in expressions such as "bandset1b1"
-- added the variable "bandset*bL" for using the L band of all the band sets in expressions such as np.max("bandset*b1")
-- added the variable "bandset{date}bL" for using the L band of all the band sets in the list of dates or range of dates e.g. median("bandset{2019-01-01,2019-03-30}b1") 
-- added table filter for band names
-- added the possibility to enter !function! followed by an expression of Batch to execute a function using raster names (also previous output names) in the command and the variables !directory! and !file! to refer to the output directory (defined after Run) and relative output file name (defined with @ after the command) respectively e.g. !function!  stack_raster_bands;band_set : 1;output_raster_path : '!directory!' ; it is required to use section character $ instead of apostrophe ' and !! instead of ; for functions ' e.g. !function! add_raster!!input_raster_name : $#NIR#$!!band_set : 1
-- added the option to select output raster type as Float32, Int32, Int16, UInt32, UInt16, Byte
-- added settings for output nodata value
-- added settings for scale and offset values directly in the output .tif file
-- the option Input NoData as value allows for using NoData values as regular values
-- the option Use NoData value allows for defining a regular value to be used as NoData during calculation
-
-Tab Download products
-- the Sentinel-2 search works also without search coordinates if a string is entered in Advanced search (e.g. 33TTG)
-- Sentinel-2 level 2A can be filtered entering S2A_MSIL2A* in Advanced search
-- Sentinel-2 are downloaded also from Google public service https://storage.googleapis.com/gcp-public-data-sentinel-2
-- added table filter for names
-- added search and download of Sentinel-1 GRD products
-- added search and download of GOES 16 and GOES 17 products downloaded from Amazon Web Services https://registry.opendata.aws/noaa-goes/
-
-Tab Preprocessing Landsat
-- tha panchromatic band is preprocessed only if pansharpening is checked
-
-Tab Preprocessing Sentinel-2
-- added checkbox for processing also bands 1, 9, 10
-- if Add bands in a new band set is checked an existing empty band set is used first
-
-Tab Band set
-- added the date field (optional) to store image acquisition date (format yyyy-mm-dd) that can be used for expressions in Band calc
-- added table filter for band names
-- added Sentinel-2 list with all the bands
-
-Tab Batch
-- added function qgis_processing to access QGIS Processing tools (e.g. qgis_processing;command : 'grass7:v.dissolve';parameters : 'input': 'input_path', 'column': 'cat','output': 'output_path')
-- added function !for_directory_in! to iterate commands for all the directories in a directory path (e.g. !for_directory_in!;'directoryPath') with the variables !directory_name! to use the current directory name and !directory! to use the current directory path. The commands are performed in batch until the command !end_for_directory! . Optionally a directory level and a name filter can be set (e.g. !for_directory_in!;'directoryPath';2;'name'). Multiple name filters can be set with | (e.g. !for_directory_in!;'directoryPath';2;'name1|name2'). It is possible to filter by date if the name ends with the date format yyyy-mm-dd using a range (e.g. 2020-01-01:2020-03-31)
-- added function !for_file_in!;directoryPath to iterate commands for all the files (calling !file! in a command) in a directoryPath until !end_for_file! . Optionally a directory level and a file filter (e.g. !for_file_in!;'directoryPath';0;'jpg'). Multiple name filters can be set with | (e.g. !for_file_in!;'directoryPath';0;'jpg|tif'). It is possible to filter by date if the name ends with the date format yyyy-mm-dd using a range (e.g. 2020-01-01:2020-03-31). Also !file_directory! can be used to refer to the parent directory of the file
-- added function '!start_for_band_set!';bandsetNumber to iterate commands for all the band sets (calling '!band_set!' in a command) until !end_for_band_set! . It is possible to enter a list of numbers (separated by commas), a range separated by colon, or a list of ranges (e.g. !start_for_band_set!;'2:3' add_new_bandset;band_set : !band_set! !end_for_band_set!
-- added the function !temp_raster_#! (replacing # with a number or string e.g. !temp_raster_1!) to create a temporary raster to be used with other functions such as band_calc;expression : '"raster1"';output_raster_path : '!temp_raster_1!'. !temp_raster_1! replaces the path to the raster and temp_raster_1 is the actual name of the raster
-- added the possibility to create custom variables entering a line such as !customName! = value (value can be either number or text), for instance !number! = 20, this variable !number! will be replaced in the following parts of the batch script
-- added the function remove_band_from_bandset to remove bands from a band set (e.g. remove_band_from_bandset;band_set : 1;band_list : '1, 2')
-- the function to create band set accepts a directory and a file name filter as raster_path_list option (e.g. '/dir, tif')
-- the function to create band set accepts the satellite name as center_wavelength option to set the band wavelength center
-- the function add_raster allows to add the raster to an existing band set (band_set) and optionally set the wavelength (center_wavelength)
-- if using Band calc function, it is required to use section character $ instead of apostrophe ' and !! instead of ; for functions expressions
-
-Tab Reclassification
-- added new button Incremental new value for calculating a new unique value for every old value
-
-Tab Settings
-- added option to create RGB composite of band set when a project is loaded
-- added option for using multiple CPU threads (it is recommended to set a value lower than the number of available CPUs)
+version 8.0.0 
+  -new version based on Remotior Sensus (i.e. a Python library developed for remote sensing) as main processing framework
+	-the whole code has been substantially rewritten and improved
+	-improved the interface for managing Band sets, which support dates, and multiple band sets can be directly managed
+	-band sets, and therefore all the tools using band sets, no longer require the bands to be previously loaded in QGIS, therefore bands can be loaded directly selecting the files
+	-training input has been improved to be integrated with Remotior Sensus' management of spectral signatures
+	-download of products relies on Remotior Sensus tools, which allow for the moment the download of Copernicus Sentinel-2 and NASA Harmonized Landsat and Sentinel-2 data
+	-available preprocessing tools:
+	--"Clip raster bands" for creating image subsets
+	--new unified interface named "Image conversion" allows for image preprocessing conversion of Landsat and Sentinel-2 images
+	--"Masking bands" for masking images based on raster values or vector
+	--"Reproject raster bands" for resampling and reprojecting images
+	--"Split raster bands" for splitting multiband images
+	--"Stack raster bands" for creating a multiband raster
+	--"Vector to raster" for rasterization
+	-available processing tools:
+	--unified interface for "Classification" which includes Random Forest, Multilayer Perceptron, Support Vector Machine
+	--scikit-learn and PyTorch are used as machine learning libraries
+	--"Classification" tool allows for training the classifier, optionally saving the classifier for later use, and of course performing the classification
+	--"Combination" for calculating band combinations of values
+	--"Dilation" for calculating band dilation of values based on desired size
+	--"Erosion" for calculating band erosion of values based on desired size
+	--"Sieve" for filtering isolated pixel values
+	--"Neighbor" for calculating functions on pixels considering a desired neighbor distance
+	--"PCA" for Principal Component Analysis
+	-available postprocessing tools:
+	--"Accuracy" for calculating classification accuracy based on reference data
+	--"Classification report" for calculating area statistics of raster classes
+	--"Classification to vector" for converting a raster band to vector
+	--"Cross classification" for crossing two raster bands and calculate the combination of values or linear regression
+	--"Reclassification" for calculating new values for raster classes
+	-a few tools, such as clustering and edit raster have been removed and will be reintroduced when available in Remotior Sensus
+	-"Band calc" interface has been improved adding several options that are available through the Remotior Sensus library, such as the optional definition of extent coordinates for limiting the calculation, or the output pixel size
+	-new tab "Script" is linked to most of the tools allowing for the display of the Python code to run the equivalent commands in Remotior Sensus (pasting the code in a Python shell), which can be useful to automate tasks and creating scripts
+	-integration of several tools in the QGIS Processing, which allows for creating models and workflows between the several libraries available in QGIS
 <pre>
 </div>
-<br />
-<div style="text-align: justify;">
-<a href="https://fromgistors.blogspot.com/p/user-manual.html?spref=scp" target="">User manual of SCP</a></div>
-<br />
-<div style="text-align: justify;">
-<a href="https://fromgistors.blogspot.com/search/label/Tutorial?max-results=5">Tutorials about SCP</a></div>
-<br />
-<div style="text-align: justify;">
-<a href="https://www.facebook.com/groups/SemiAutomaticClassificationPlugin">SCP group in Facebook</a></div>
-<br />
-<div style="text-align: justify;">
-<a href="https://plus.google.com/communities/107833394986612468374">SCP community in Google+</a></div>
-<br />
-<div style="text-align: left;">
-<a href="https://fromgistors.blogspot.com/p/donations.html">Support SCP</a></div>
-<br />
